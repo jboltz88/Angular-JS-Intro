@@ -79,6 +79,12 @@
     SongPlayer.currentTime = null;
     
     /**
+    * @desc Holds the current volume level
+    * @type {Number}
+    */
+    SongPlayer.volume = 30;
+    
+    /**
     * @desc Holds the current album Object from Fixtures.getAlbum()
     * @type {Object}
     */
@@ -159,6 +165,15 @@
         currentBuzzObject.setTime(time);
       }
     };
+    
+    /**
+    * @function setVolume
+    * @desc Set volume of the song playback
+    * @param {Number} value
+    */
+    SongPlayer.setVolume = function(value) {
+      currentBuzzObject.setVolume(value);
+    }
     
     return SongPlayer;
   }
