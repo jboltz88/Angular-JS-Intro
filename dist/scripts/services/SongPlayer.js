@@ -82,7 +82,7 @@
     * @desc Holds the current volume level
     * @type {Number}
     */
-    SongPlayer.volume = 30;
+    SongPlayer.volume = 100;
     
     /**
     * @desc Holds the current album Object from Fixtures.getAlbum()
