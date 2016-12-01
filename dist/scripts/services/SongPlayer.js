@@ -34,7 +34,7 @@
       
       currentBuzzObject = new buzz.sound(song.audioUrl, {
         formats: ['mp3'],
-        preload: true
+        preload: true,
       });
       
       currentBuzzObject.bind('timeupdate', function() {
@@ -82,7 +82,7 @@
     * @desc Holds the current volume level
     * @type {Number}
     */
-    SongPlayer.volume = 100;
+    SongPlayer.volume = 80;
     
     /**
     * @desc Holds the current album Object from Fixtures.getAlbum()
@@ -174,6 +174,20 @@
     SongPlayer.setVolume = function(value) {
       currentBuzzObject.setVolume(value);
     }
+    
+    /**
+    * @function mute
+    * @desc Toggles from muting to unmuting the playback
+    */
+    SongPlayer.muteToggle = function() {
+      currentBuzzObject.toggleMute();
+      if (currentBuzzObject.isMuted()) {
+        SongPlayer.currentSong.muted = true;
+      }
+      else {
+        SongPlayer.currentSong.muted = false;
+      }
+    };
     
     return SongPlayer;
   }
