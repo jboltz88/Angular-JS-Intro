@@ -11,7 +11,13 @@
     * @type {Object}
     */
     var currentBuzzObject = null;
-        
+    
+    /**
+    * @desc Array of scopes from registered Controllers
+    * @type {Array}
+    */
+    var scopeHolder = [];
+    
     /**
     * @function stopSong
     * @desc Stops the currentBuzzObject and sets song.playing to null
@@ -38,15 +44,26 @@
       });
       
       currentBuzzObject.bind('timeupdate', function() {
-        $rootScope.$apply(function() {
-          SongPlayer.currentTime = currentBuzzObject.getTime();
-          if (SongPlayer.currentTime === parseFloat(SongPlayer.currentSong.duration)) {
-            SongPlayer.next();
-          }
-        })
-      })
+        for (var i=0; i < scopeHolder.length; i++) {
+          scopeHolder[i].$apply(function() {
+            SongPlayer.currentTime = currentBuzzObject.getTime();
+            if (SongPlayer.currentTime === parseFloat(SongPlayer.currentSong.duration)) {
+              SongPlayer.next();
+            }
+          });
+        }
+      });
       
       SongPlayer.currentSong = song;
+    };
+    
+    /**
+    * @function registerController
+    * @desc Adds a scope to the array of scopes from registered controllers
+    * @param {Object} scope
+    */
+    SongPlayer.registerController = function(scope) {
+      scopeHolder.push(scope);
     };
     
     /**
