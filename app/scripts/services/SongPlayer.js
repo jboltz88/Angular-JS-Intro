@@ -11,7 +11,13 @@
     * @type {Object}
     */
     var currentBuzzObject = null;
-        
+    
+    /**
+    * @desc Array of scopes from registered Controllers
+    * @type {Array}
+    */
+    var scopeHolder = [];
+    
     /**
     * @function stopSong
     * @desc Stops the currentBuzzObject and sets song.playing to null
@@ -34,16 +40,30 @@
       
       currentBuzzObject = new buzz.sound(song.audioUrl, {
         formats: ['mp3'],
-        preload: true
+        preload: true,
       });
       
       currentBuzzObject.bind('timeupdate', function() {
-        $rootScope.$apply(function() {
-          SongPlayer.currentTime = currentBuzzObject.getTime();
-        })
-      })
+        for (var i=0; i < scopeHolder.length; i++) {
+          scopeHolder[i].$apply(function() {
+            SongPlayer.currentTime = currentBuzzObject.getTime();
+            if (SongPlayer.currentTime === parseFloat(SongPlayer.currentSong.duration)) {
+              SongPlayer.next();
+            }
+          });
+        }
+      });
       
       SongPlayer.currentSong = song;
+    };
+    
+    /**
+    * @function registerController
+    * @desc Adds a scope to the array of scopes from registered controllers
+    * @param {Object} scope
+    */
+    SongPlayer.registerController = function(scope) {
+      scopeHolder.push(scope);
     };
     
     /**
@@ -82,7 +102,7 @@
     * @desc Holds the current volume level
     * @type {Number}
     */
-    SongPlayer.volume = 100;
+    SongPlayer.volume = 80;
     
     /**
     * @desc Holds the current album Object from Fixtures.getAlbum()
@@ -145,7 +165,7 @@
       var currentSongIndex = getSongIndex(SongPlayer.currentSong);
       currentSongIndex++;
       
-      if (currentSongIndex > SongPlayer.currentAlbum.songs.length) {
+      if (currentSongIndex > SongPlayer.currentAlbum.songs.length-1) {
         stopSong();
       }
       else {
@@ -174,6 +194,20 @@
     SongPlayer.setVolume = function(value) {
       currentBuzzObject.setVolume(value);
     }
+    
+    /**
+    * @function mute
+    * @desc Toggles from muting to unmuting the playback
+    */
+    SongPlayer.muteToggle = function() {
+      currentBuzzObject.toggleMute();
+      if (currentBuzzObject.isMuted()) {
+        SongPlayer.currentSong.muted = true;
+      }
+      else {
+        SongPlayer.currentSong.muted = false;
+      }
+    };
     
     return SongPlayer;
   }
