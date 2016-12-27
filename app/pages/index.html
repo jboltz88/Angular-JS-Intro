@@ -25,9 +25,23 @@
   
   <ui-view></ui-view>
   
+  
+  <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDxtYhU_B4lK7JC10WP0iNUhVlt6XVwods",
+      authDomain: "bloc-jams-34b7a.firebaseapp.com",
+      databaseURL: "https://bloc-jams-34b7a.firebaseio.com",
+      storageBucket: "bloc-jams-34b7a.appspot.com",
+      messagingSenderId: "339568741538"
+    };
+    firebase.initializeApp(config);
+  </script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+  <script src="https://cdn.firebase.com/libs/angularfire/2.2.0/angularfire.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/buzz/1.1.10/buzz.min.js"></script>
   <script src="/scripts/app.js"></script>
   <script src="/scripts/services/Fixtures.js"></script>
