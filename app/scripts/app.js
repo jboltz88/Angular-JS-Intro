@@ -17,6 +17,16 @@
         controller: 'AlbumCtrl as album',
         templateUrl: '/templates/album.html'
       })
+      .state('login', {
+        url: '/login',
+        controller: 'UserCtrl as user',
+        templateUrl: '/templates/login.html'
+      })
+      .state('register', {
+        url: '/register',
+        controller: 'RegisterCtrl as user',
+        templateUrl: '/templates/register.html'
+      })
       .state('collection', {
         url: '/collection',
         controller: 'CollectionCtrl as collection',
