@@ -12,16 +12,18 @@
     <link rel="stylesheet" type="text/css" href="/styles/collection.css">
     <link rel="stylesheet" type="text/css" href="/styles/album.css">
     <link rel="stylesheet" type="text/css" href="/styles/player_bar.css">
+    <link rel="stylesheet" type="text/css" href="/styles/user.css">
 </head>
 <body>
-  <nav class="navbar"> <! -- navigation bar -->
+  <nav class="navbar" ng-controller="NavCtrl as nav"> <! -- navigation bar -->
     <a ui-sref="landing" class="logo">
       <img src="assets/images/bloc_jams_logo.png" alt="bloc jams logo" class="logo">
     </a>
     <div class="links-container">
-      <a ui-sref="collection" class="navbar-link">collection</a>
-      <a ui-sref="login" class="navbar-link">login</a>
-      <a ui-sref="register" class="navbar-link">register</a>
+      <a ng-show="nav.firebaseUser" ui-sref="collection" class="navbar-link">collection</a>
+      <a ng-hide="nav.firebaseUser" ui-sref="user" class="navbar-link">login</a>
+      <a ng-show="nav.firebaseUser" ui-sref="user" class="navbar-link">profile</a>
+      <a ng-hide="nav.firebaseUser" ui-sref="register" class="navbar-link">register</a>
     </div>
   </nav>
   
@@ -49,6 +51,7 @@
   <script src="/scripts/factories/Auth.js"></script>
   <script src="/scripts/services/Fixtures.js"></script>
   <script src="/scripts/services/SongPlayer.js"></script>
+  <script src="/scripts/controllers/NavCtrl.js"></script>
   <script src="/scripts/controllers/LandingCtrl.js"></script>
   <script src="/scripts/controllers/CollectionCtrl.js"></script>
   <script src="/scripts/controllers/AlbumCtrl.js"></script>
