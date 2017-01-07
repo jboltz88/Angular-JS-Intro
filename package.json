@@ -13,6 +13,7 @@
   "author": "Bloc Inc",
   "license": "ISC",
   "dependencies": {
+    "angular-cookie": "^4.1.0",
     "angularfire": "^2.2.0",
     "firebase": "^3.6.4",
     "hapi": "~7.5.0",

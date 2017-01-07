@@ -10,7 +10,20 @@
       .state('landing', {
         url: '/',
         controller: 'LandingCtrl as landing',
-        templateUrl: '/templates/landing.html'
+        templateUrl: '/templates/landing.html',
+        resolve: {
+          // controller will not be loaded until $requireSignIn resolves
+          // Auth refers to our $firebaseAuth wrapper in the factory below
+          "currentAuth": ["Auth", "$cookies", function(Auth, $cookies) {
+            console.log(">>>>", $cookies);
+            if ($cookies.getObject("user")) {
+              console.log("A cookie exists");
+              return $cookies.getObject("user");
+            }
+            // $requireSignIn returns a promise so the resolve waits for it to complete
+            return Auth.$firebaseAuth.$waitForSignIn();
+          }]
+        }
       })
       .state('album', {
         url: '/album',
@@ -19,9 +32,13 @@
         resolve: {
           // controller will not be loaded until $requireSignIn resolves
           // Auth refers to our $firebaseAuth wrapper in the factory below
-          "currentAuth": ["Auth", function(Auth) {
+          "currentAuth": ["Auth", "$cookies", function(Auth, $cookies) {
+            console.log(">>>>", $cookies);
+            if ($cookies.getObject("user")) {
+              console.log("A cookie exists");
+              return $cookies.getObject("user");
+            }
             // $requireSignIn returns a promise so the resolve waits for it to complete
-            console.log(Auth.$firebaseAuth);
             return Auth.$firebaseAuth.$requireSignIn();
           }]
         }
@@ -29,7 +46,20 @@
       .state('user', {
         url: '/user',
         controller: 'UserCtrl as user',
-        templateUrl: '/templates/user.html'
+        templateUrl: '/templates/user.html',
+        resolve: {
+          // controller will not be loaded until $requireSignIn resolves
+          // Auth refers to our $firebaseAuth wrapper in the factory below
+          "currentAuth": ["Auth", "$cookies", function(Auth, $cookies) {
+            console.log(">>>>", $cookies);
+            if ($cookies.getObject("user")) {
+              console.log("A cookie exists");
+              return $cookies.getObject("user");
+            }
+            // $requireSignIn returns a promise so the resolve waits for it to complete
+            return Auth.$firebaseAuth.$waitForSignIn();
+          }]
+        }
       })
       .state('register', {
         url: '/register',
@@ -43,7 +73,12 @@
         resolve: {
           // controller will not be loaded until $requireSignIn resolves
           // Auth refers to our $firebaseAuth wrapper in the factory below
-          "currentAuth": ["Auth", function(Auth) {
+          "currentAuth": ["Auth", "$cookies", function(Auth, $cookies) {
+            console.log(">>>>", $cookies);
+            if ($cookies.getObject("user")) {
+              console.log("A cookie exists");
+              return $cookies.getObject("user");
+            }
             // $requireSignIn returns a promise so the resolve waits for it to complete
             return Auth.$firebaseAuth.$requireSignIn();
           }]
@@ -52,6 +87,6 @@
   }
   
   angular
-    .module('blocJams', ['ui.router', 'firebase'])
+    .module('blocJams', ['ui.router', 'firebase', 'ngCookies'])
     .config(config);
 })();

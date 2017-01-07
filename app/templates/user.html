@@ -1,12 +1,12 @@
 <section class=user-form>
-  <div ng-show="user.firebaseUser">
+  <div ng-show="user.userExists()">
     <p>Hello, {{ user.firebaseUser.displayName || user.firebaseUser.email }}</p>
     <button ng-click="user.signOut()" ui-sref="user">Sign Out</button>
     <br><br>
     <button ng-click="user.deleteUser()">Delete User</button>
   </div>
   
-  <div ng-hide="user.firebaseUser">
+  <div ng-hide="user.userExists()">
     <p>Welcome, please sign in.</p>
     <input type="text" ng-model="user.email" required autofocus> Email
     <br><br>

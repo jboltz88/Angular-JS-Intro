@@ -1,15 +1,9 @@
 (function() {
-  function Auth($firebaseAuth) {
+  function Auth($firebaseAuth, $cookies) {
     var Auth = {};
     var stateChangeCallbacks = [];
     
     Auth.$firebaseAuth = $firebaseAuth();
-    
-//    Auth.isUserLoaded = function () {
-//      if (Auth.$firebaseUser) {
-//        return
-//      }
-//    }
     
     Auth.onStateChange = function (callback) {
       stateChangeCallbacks.push(callback);
@@ -18,7 +12,6 @@
     // any time auth state changes, add the user data to scope
     Auth.$firebaseAuth.$onAuthStateChanged(function(firebaseUser) {
       Auth.$firebaseUser = firebaseUser;
-      console.log("Auth Auth.$firebaseUser", Auth.$firebaseUser);
       
       for (var i = 0; i < stateChangeCallbacks.length; i++) {
         stateChangeCallbacks[i](firebaseUser);
@@ -54,6 +47,7 @@
       Auth.$firebaseAuth.$signOut();
       this.email = null;
       this.password = null;
+      $cookies.remove('user');
       window.alert("You have been successfully signed out. See you back soon!");
     }
         
@@ -62,5 +56,5 @@
   
   angular
     .module('blocJams')
-    .factory('Auth', ["$firebaseAuth", Auth])
+    .factory('Auth', ["$firebaseAuth", '$cookies', Auth])
 })();
