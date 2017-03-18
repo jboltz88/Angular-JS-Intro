@@ -1,0 +1,27 @@
+<section class="user-form">
+  <div class="container">
+    <h1>Sign Up</h1>
+    <input type="text" ng-model="register.email" required autofocus> Email
+    <br><br>
+    <input id=password-field type="password" ng-model="register.password" required> Password
+
+    <br><br>
+
+    <button id=submit ng-click="register.createUser()" ui-sref="landing">Create User</button>
+
+    <br><br>
+
+    <p ng-if="message">Message: <strong>{{ message }}</strong></p>
+    <p ng-if="error">Error: <strong>{{ error }}</strong></p>
+  </div>
+</section>
+
+<script>
+  document.getElementById("password-field")
+    .addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode == 13) {
+        document.getElementById("submit").click();
+    }
+  });
+</script>

@@ -1,0 +1,31 @@
+<section class=user-form>
+  <div ng-show="user.userExists()">
+    <p>Hello, {{ user.firebaseUser.displayName || user.firebaseUser.email }}</p>
+    <button ng-click="user.signOut()" ui-sref="user">Sign Out</button>
+    <br><br>
+    <button ng-click="user.deleteUser()">Delete User</button>
+  </div>
+  
+  <div ng-hide="user.userExists()">
+    <p>Welcome, please sign in.</p>
+    <input type="text" ng-model="user.email" required autofocus> Email
+    <br><br>
+    <input id=password-field type="password" ng-model="user.password" required> Password
+    <br><br>
+    <button id=login ng-click="user.auth.$signInWithEmailAndPassword(user.email, user.password)">Login</button>
+    <br><br><br><br>
+    <button style="background-color: blue; color: white" ng-click="user.auth.$signInWithPopup('facebook')">Sign In With Facebook</button>
+    <br><br>
+    <button style="background-color: green; color: white" ng-click="user.auth.$signInWithPopup('google')">Sign In With Google</button>
+  </div>
+</section>
+
+<script>
+  document.getElementById("password-field")
+    .addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode == 13) {
+        document.getElementById("login").click();
+    }
+  });
+</script>

@@ -12,30 +12,53 @@
     <link rel="stylesheet" type="text/css" href="/styles/collection.css">
     <link rel="stylesheet" type="text/css" href="/styles/album.css">
     <link rel="stylesheet" type="text/css" href="/styles/player_bar.css">
+    <link rel="stylesheet" type="text/css" href="/styles/user.css">
 </head>
 <body>
-  <nav class="navbar"> <! -- navigation bar -->
+  <nav class="navbar" ng-controller="NavCtrl as nav"> <! -- navigation bar -->
     <a ui-sref="landing" class="logo">
       <img src="assets/images/bloc_jams_logo.png" alt="bloc jams logo" class="logo">
     </a>
     <div class="links-container">
-      <a ui-sref="collection" class="navbar-link">collection</a>
+      <a ng-show="nav.firebaseUser" ui-sref="collection" class="navbar-link">collection</a>
+      <a ng-hide="nav.firebaseUser" ui-sref="user" class="navbar-link">login</a>
+      <a ng-show="nav.firebaseUser" ui-sref="user" class="navbar-link">profile</a>
+      <a ng-hide="nav.firebaseUser" ui-sref="register" class="navbar-link">register</a>
     </div>
   </nav>
   
   <ui-view></ui-view>
   
+  
+  <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDxtYhU_B4lK7JC10WP0iNUhVlt6XVwods",
+      authDomain: "bloc-jams-34b7a.firebaseapp.com",
+      databaseURL: "https://bloc-jams-34b7a.firebaseio.com",
+      storageBucket: "bloc-jams-34b7a.appspot.com",
+      messagingSenderId: "339568741538"
+    };
+    firebase.initializeApp(config);
+  </script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-cookies.min.js"></script>
+  <script src="https://cdn.firebase.com/libs/angularfire/2.2.0/angularfire.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/buzz/1.1.10/buzz.min.js"></script>
   <script src="/scripts/app.js"></script>
+  <script src="/scripts/factories/Auth.js"></script>
   <script src="/scripts/services/Fixtures.js"></script>
   <script src="/scripts/services/SongPlayer.js"></script>
+  <script src="/scripts/controllers/NavCtrl.js"></script>
   <script src="/scripts/controllers/LandingCtrl.js"></script>
   <script src="/scripts/controllers/CollectionCtrl.js"></script>
   <script src="/scripts/controllers/AlbumCtrl.js"></script>
   <script src="/scripts/controllers/PlayerBarCtrl.js"></script>
+  <script src="/scripts/controllers/UserCtrl.js"></script>  
+  <script src="/scripts/controllers/RegisterCtrl.js"></script>
   <script src="/scripts/directives/seekBar.js"></script>
   <script src="/scripts/filters/timecode.js"></script>
 </body>

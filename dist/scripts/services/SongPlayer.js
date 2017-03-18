@@ -1,5 +1,5 @@
 (function() {
-  function SongPlayer($rootScope, Fixtures) {
+  function SongPlayer(Fixtures) {
     /**
     * @desc Object returned by the SongPlayer Service, making its properties and methods public to the application
     * @type {Object}
@@ -214,5 +214,5 @@
   
   angular
     .module('blocJams')
-    .factory('SongPlayer', ['$rootScope', 'Fixtures', SongPlayer]);
+    .factory('SongPlayer', ['Fixtures', SongPlayer]);
 })();
