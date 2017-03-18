@@ -25,7 +25,9 @@
     Auth.onStateChange(function (firebaseUser) {
       this.firebaseUser = firebaseUser;
       console.log("UserCtrl Auth.$firebaseUser", Auth.$firebaseUser);
-      $cookies.putObject("user", firebaseUser);
+      var expireDate = new Date();
+      expireDate.setDate(expireDate.getDate() + 1);
+      $cookies.putObject("user", firebaseUser, {'expires': expireDate});
     }.bind(this));
    
   }
